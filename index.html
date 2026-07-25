@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Google">
+<meta name="theme-color" content="#14161A">
+<title>Google Launcher</title>
+<style>
+  :root{
+    --bg-top:#14161A;
+    --bg-bottom:#1C1F26;
+    --ink:#F3F4F6;
+    --ink-dim:#8A8F98;
+    --card:#20232B;
+    --card-border:rgba(255,255,255,0.06);
+    --accent:#8AB4F8;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    min-height:100vh;
+    min-height:100dvh;
+    background:linear-gradient(160deg,var(--bg-top),var(--bg-bottom) 70%);
+    font-family:-apple-system,'Inter',BlinkMacSystemFont,sans-serif;
+    color:var(--ink);
+    padding:env(safe-area-inset-top) 20px calc(env(safe-area-inset-bottom) + 24px) 20px;
+    overflow-x:hidden;
+  }
+  .glow{
+    position:fixed;
+    top:-120px; left:50%;
+    transform:translateX(-50%);
+    width:480px; height:320px;
+    background:radial-gradient(closest-side, var(--accent-glow, rgba(138,180,248,0.18)), transparent 70%);
+    filter:blur(10px);
+    pointer-events:none;
+    z-index:0;
+    transition:background 1s ease;
+  }
+  header{
+    position:relative;
+    z-index:1;
+    padding:28px 4px 22px 4px;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono','SFMono-Regular',Menlo,monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    margin:0 0 8px 0;
+  }
+  h1{
+    font-family:'Space Grotesk','Manrope',-apple-system,sans-serif;
+    font-weight:600;
+    font-size:30px;
+    line-height:1.15;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .clock{
+    font-family:'JetBrains Mono',Menlo,monospace;
+    font-size:13px;
+    color:var(--ink-dim);
+    margin-top:10px;
+  }
+  section{
+    position:relative;
+    z-index:1;
+    margin-bottom:26px;
+  }
+  .section-label{
+    font-family:'JetBrains Mono',Menlo,monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    margin:0 0 12px 4px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .section-label::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background:var(--card-border);
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+  }
+  a.tile{
+    text-decoration:none;
+    color:var(--ink);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    padding:16px 6px 12px 6px;
+    background:var(--card);
+    border:1px solid var(--card-border);
+    border-radius:20px;
+    transition:transform .15s ease, background .15s ease;
+  }
+  a.tile:active{
+    transform:scale(0.94);
+    background:#262a34;
+  }
+  .mono{
+    width:46px;
+    height:46px;
+    border-radius:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Space Grotesk','Manrope',sans-serif;
+    font-weight:700;
+    font-size:19px;
+    color:#0C0D10;
+  }
+  .tile-label{
+    font-size:12.5px;
+    font-weight:500;
+    color:var(--ink);
+    text-align:center;
+  }
+  footer{
+    position:relative;
+    z-index:1;
+    text-align:center;
+    color:var(--ink-dim);
+    font-size:11.5px;
+    font-family:'JetBrains Mono',Menlo,monospace;
+    margin-top:8px;
+    line-height:1.6;
+  }
+  @media (prefers-reduced-motion: reduce){
+    a.tile{transition:none;}
+  }
+</style>
+</head>
+<body>
+<div class="glow" id="glow"></div>
+
+<header>
+  <p class="eyebrow" id="eyebrow">Quick launch</p>
+  <h1 id="greeting">Good afternoon</h1>
+  <p class="clock" id="clock"></p>
+</header>
+
+<section>
+  <p class="section-label">Communicate</p>
+  <div class="grid">
+    <a class="tile" href="https://mail.google.com/mail/">
+      <div class="mono" style="background:#EA4335;color:#fff;">G</div>
+      <span class="tile-label">Gmail</span>
+    </a>
+    <a class="tile" href="https://meet.google.com/">
+      <div class="mono" style="background:#00897B;color:#fff;">M</div>
+      <span class="tile-label">Meet</span>
+    </a>
+    <a class="tile" href="https://calendar.google.com/calendar/">
+      <div class="mono" style="background:#1A73E8;color:#fff;">C</div>
+      <span class="tile-label">Calendar</span>
+    </a>
+  </div>
+</section>
+
+<section>
+  <p class="section-label">Create &amp; organize</p>
+  <div class="grid">
+    <a class="tile" href="https://drive.google.com/drive/">
+      <div class="mono" style="background:#FBBC04;color:#3C3000;">D</div>
+      <span class="tile-label">Drive</span>
+    </a>
+    <a class="tile" href="https://docs.google.com/document/">
+      <div class="mono" style="background:#4285F4;color:#fff;">D</div>
+      <span class="tile-label">Docs</span>
+    </a>
+    <a class="tile" href="https://docs.google.com/spreadsheets/">
+      <div class="mono" style="background:#34A853;color:#fff;">S</div>
+      <span class="tile-label">Sheets</span>
+    </a>
+    <a class="tile" href="https://docs.google.com/presentation/">
+      <div class="mono" style="background:#F9AB00;color:#3C2E00;">S</div>
+      <span class="tile-label">Slides</span>
+    </a>
+  </div>
+</section>
+
+<section>
+  <p class="section-label">Explore</p>
+  <div class="grid">
+    <a class="tile" href="https://maps.google.com/">
+      <div class="mono" style="background:#0F9D58;color:#fff;">M</div>
+      <span class="tile-label">Maps</span>
+    </a>
+    <a class="tile" href="https://photos.google.com/">
+      <div class="mono" style="background:linear-gradient(135deg,#EA4335,#FBBC04,#4285F4);color:#fff;">P</div>
+      <span class="tile-label">Photos</span>
+    </a>
+    <a class="tile" href="https://youtube.com/">
+      <div class="mono" style="background:#FF0000;color:#fff;">Y</div>
+      <span class="tile-label">YouTube</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  Tap once, land in-app if installed.<br>
+  Long-press this page's tile on your Home Screen to rearrange.
+</footer>
+
+<script>
+  const greetingEl = document.getElementById('greeting');
+  const eyebrowEl = document.getElementById('eyebrow');
+  const clockEl = document.getElementById('clock');
+  const glowEl = document.getElementById('glow');
+
+  function update(){
+    const now = new Date();
+    const h = now.getHours();
+    let greeting, glow;
+    if (h < 5)       { greeting = 'Still up?';        glow = 'rgba(120,120,200,0.14)'; }
+    else if (h < 12)  { greeting = 'Good morning';     glow = 'rgba(255,196,120,0.18)'; }
+    else if (h < 17)  { greeting = 'Good afternoon';   glow = 'rgba(138,180,248,0.18)'; }
+    else if (h < 21)  { greeting = 'Good evening';     glow = 'rgba(255,140,120,0.16)'; }
+    else              { greeting = 'Winding down';     glow = 'rgba(120,120,200,0.14)'; }
+
+    greetingEl.textContent = greeting;
+    glowEl.style.setProperty('--accent-glow', glow);
+
+    const time = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    const day = now.toLocaleDateString([], {weekday:'long', month:'short', day:'numeric'});
+    clockEl.textContent = `${day} · ${time}`;
+  }
+  update();
+  setInterval(update, 30000);
+</script>
+</body>
+</html>
